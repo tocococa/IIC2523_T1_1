@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strconv"
+	"strings"
 )
 
 func main() {
@@ -13,8 +15,11 @@ func main() {
 
 	for _, f := range files {
 		dat := openFile(f.Name())
-		parseFile(dat) // retornar estructura
-		// resolver problema
+		// todo: sacar id y cols del nombre del archivo
+		matrix := parseFile(dat, 5) // retornar matriz
+		fmt.Println(matrix)
+
+		// todo: resolver problema
 		f := createFile("numberOfIslands_<id>.txt")
 		writeFileAndClose("2", f)
 	}
@@ -41,7 +46,6 @@ func openFile(fileName string) string {
 func createFile(name string) *os.File {
 	f, err := os.Create("./respuestas/" + name)
 	check(err)
-	//defer f.Close()
 	return f
 }
 
@@ -52,6 +56,20 @@ func writeFileAndClose(data string, f *os.File) {
 	defer f.Close()
 }
 
-func parseFile(dat string) {
-	fmt.Print(dat + "\n")
+//func getIdAndCols(fileName string) []int {
+
+//}
+
+func parseFile(dat string, cols int) [][]int {
+	list := strings.Split(dat, ",")
+	rows := len(list) / cols
+	matrix := make([][]int, rows)
+	for i := 0; i < rows; i++ {
+		matrix[i] = make([]int, cols)
+		for j := 0; j < cols; j++ {
+			intVar, _ := strconv.Atoi(list[i*cols+j])
+			matrix[i][j] = intVar
+		}
+	}
+	return matrix
 }
