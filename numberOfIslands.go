@@ -20,7 +20,7 @@ func main() {
 		fmt.Println(matrix)
 
 		// todo: resolver problema
-		f := createFile("numberOfIslands_<id>.txt")
+		f := createFile("numberOfIslands_id.txt")
 		writeFileAndClose("2", f)
 	}
 }
