@@ -20,10 +20,41 @@ func main() {
 		fmt.Println(matrix)
 
 		// todo: resolver problema
+		count := countIslands(matrix)
+		fmt.Println(count)
 		f := createFile("numberOfIslands_id.txt")
 		writeFileAndClose("2", f)
 	}
 }
+
+func countIslands(matrix [][]int) int {
+	rows := len(matrix)
+	cols := len(matrix[0])
+	count := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if matrix[i][j] == 1 {
+				count++
+				dfs(matrix, i, j)
+			}
+		}
+	}
+	return count
+}
+
+func dfs(matrix [][]int, i int, j int) {
+	rows := len(matrix)
+	cols := len(matrix[0])
+	if i < 0 || i >= rows || j < 0 || j >= cols || matrix[i][j] == 0 {
+		return
+	}
+	matrix[i][j] = 0
+	dfs(matrix, i+1, j)
+	dfs(matrix, i-1, j)
+	dfs(matrix, i, j+1)
+	dfs(matrix, i, j-1)
+}
+
 
 func check(e error) {
 	if e != nil {
