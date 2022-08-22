@@ -15,14 +15,14 @@ func main() {
 
 	for _, f := range files {
 		dat := openFile(f.Name())
-		// todo: sacar id y cols del nombre del archivo
-		matrix := parseFile(dat, 5) // retornar matriz
-		fmt.Println(matrix)
-
-		// todo: resolver problema
+		name := strings.Split(f.Name(), "_")
+		id := name[1]
+		cols, _ := strconv.Atoi(strings.Split(name[2], ".")[0])
+		matrix := parseFile(dat, cols)
 		count := countIslands(matrix)
 		fmt.Println(count)
-		f := createFile("numberOfIslands_id.txt")
+		filename := "numberOfIslands_" + id + ".txt"
+		f := createFile(filename)
 		writeFileAndClose("2", f)
 	}
 }
@@ -42,6 +42,9 @@ func countIslands(matrix [][]int) int {
 	return count
 }
 
+// para el algoritmo de busqueda de islas, decidimos implementar
+// dfs, ya que si bien no es la funcion mas eficiente en terminos
+// de tiempo, es relativamente facil de implementar
 func dfs(matrix [][]int, i int, j int) {
 	rows := len(matrix)
 	cols := len(matrix[0])
@@ -87,9 +90,6 @@ func writeFileAndClose(data string, f *os.File) {
 	defer f.Close()
 }
 
-//func getIdAndCols(fileName string) []int {
-
-//}
 
 func parseFile(dat string, cols int) [][]int {
 	list := strings.Split(dat, ",")
