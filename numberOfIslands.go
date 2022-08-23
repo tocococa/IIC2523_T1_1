@@ -23,7 +23,7 @@ func main() {
 		fmt.Println(count)
 		filename := "numberOfIslands_" + id + ".txt"
 		f := createFile(filename)
-		writeFileAndClose("2", f)
+		writeFileAndClose(strconv.Itoa(count), f)
 	}
 }
 
@@ -58,7 +58,6 @@ func dfs(matrix [][]int, i int, j int) {
 	dfs(matrix, i, j-1)
 }
 
-
 func check(e error) {
 	if e != nil {
 		panic(e)
@@ -89,7 +88,6 @@ func writeFileAndClose(data string, f *os.File) {
 	check(err)
 	defer f.Close()
 }
-
 
 func parseFile(dat string, cols int) [][]int {
 	list := strings.Split(dat, ",")
